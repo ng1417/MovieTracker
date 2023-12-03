@@ -119,4 +119,3 @@ fun MovieCard(movie: String) {
         }
     }
 }
-
