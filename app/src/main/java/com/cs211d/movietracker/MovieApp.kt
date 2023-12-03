@@ -1,5 +1,6 @@
 package com.cs211d.movietracker
 
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -11,12 +12,16 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.dimensionResource
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import com.cs211d.movietracker.ui.EnterMovieScreen
+import com.cs211d.movietracker.ui.HomeScreen
+import com.cs211d.movietracker.ui.MovieRecommendation
 import com.cs211d.movietracker.ui.MovieViewModel
 
 
@@ -60,8 +65,29 @@ fun MovieApp(
 
             // add to or modify this existing composable as needed
             composable(route = MovieAppScreen.Home.name) {
+                HomeScreen(
+                    viewModel = viewModel,
+                    navController = navController,
+                    onEnterMovieClick = {navController.navigate(MovieAppScreen.EnterMovie.name)},
+                    onRecommendationMovieClick = {navController.navigate(MovieAppScreen.RecommendMovie.name)},
+                )
             }
 
+            composable(route = MovieAppScreen.EnterMovie.name) {
+                EnterMovieScreen(
+                    movieViewModel = viewModel,
+                    onClickHome = { navController.navigate(MovieAppScreen.Home.name) },
+                    onClickRecommend = { navController.navigate(MovieAppScreen.RecommendMovie.name) },
+                    onMovieInputChange = { viewModel.addMovieToList() },
+                    onAddMovie = { viewModel.addMovieToList() },
+                )
+            }
+
+            composable(route = MovieAppScreen.RecommendMovie.name) {
+                MovieRecommendation(
+                    uiState = uiState,
+                )
+            }
         }
     }
 }

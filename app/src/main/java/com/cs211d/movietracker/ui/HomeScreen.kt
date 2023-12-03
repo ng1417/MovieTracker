@@ -10,19 +10,27 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import com.cs211d.movietracker.MovieAppScreen
 import com.cs211d.movietracker.R
+import com.cs211d.movietracker.ui.components.NavigationButton
 
 @Composable
 fun HomeScreen(
     viewModel: MovieViewModel,
-    navController: NavController
+    navController: NavController,
+    onEnterMovieClick : () -> Unit = {},
+    onRecommendationMovieClick : () -> Unit = {},
 ) {
+    val uiState by viewModel.uiState.collectAsState()
+
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -47,29 +55,15 @@ fun HomeScreen(
 
         /*** CREATE A BUTTON TO GO TO THE EnterMovieScreen  ***/
         // add parameters to the HomeScreen composable as needed
-        Button(
-            onClick = {
-               //navController.navigate("enter_movie_screen")
-            },
-            modifier = Modifier
-                .padding(vertical = 8.dp)
-                .fillMaxWidth()
-        ) {
-            Text(stringResource(R.string.enter_movies_button_text))
-        }
+
+//               navController.navigate(MovieAppScreen.EnterMovie.name)
+        NavigationButton(stringResource(R.string.enter_movies_button_text), onEnterMovieClick)
+
 
         /*** CREATE A BUTTON TO GO TO THE RecommendMovieScreen  ***/
         // add parameters to the HomeScreen composable as needed
-        Button(
-            onClick = {
-             //   navController.navigate("recommend_movie_screen")
-            },
-            modifier = Modifier
-                .padding(vertical = 8.dp)
-                .fillMaxWidth()
-        ) {
-            Text(stringResource(R.string.movie_recommendation_button_text))
-        }
+//               navController.navigate(MovieAppScreen.RecommendMovie.name)
+        NavigationButton(stringResource(R.string.movie_recommendation_button_text), onRecommendationMovieClick)
     }
 }
 
