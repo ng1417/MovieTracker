@@ -29,23 +29,40 @@ class MovieViewModel : ViewModel() {
     // the user is typing in a movie; update the currentMovie variable and the state of the ui
     // to indicate whether there is an error
     fun updateMovie(movie: String) {
-
+        currentMovie = movie
+        updateUiState()
     }
 
     /*** COMPLETE THIS FUNCTION ***/
     // update the state of the ui with a movie recommendation. if the list is empty,
     // the recommendation can be "N/A". otherwise, randomly select a movie from the list.
-    fun recommendMovie()  {
-
-
+    fun recommendMovie() {
+        val recommendation = if (movieList.isNotEmpty()) {
+            val randomIndex = (0 until movieList.size).random()
+            movieList[randomIndex]
+        } else {
+            "N/A"
+        }
+        _uiState.value = _uiState.value.copy(movieRecommendation = recommendation)
     }
+
     /*** COMPLETE THIS FUNCTION ***/
     // if the movie is valid, add it to the list.
     // either way, update the state of the ui and the currentMovie.
     fun addMovieToList() {
-
+        if (isValidMovie(currentMovie)) {
+            movieList.add(currentMovie)
+            currentMovie = ""
+            updateUiState()
+        }
     }
 
     /*** RECOMMENDED: add one or more private methods to update the state of the ui! ***/
+    private fun updateUiState() {
+        val isError = !isValidMovie(currentMovie)
+        val errorMessage = if (isError) "Please enter a valid movie name" else ""
+        _uiState.value = _uiState.value.copy(movieError = isError, movieList = movieList, movieRecommendation = "")
+    }
+
 
 }

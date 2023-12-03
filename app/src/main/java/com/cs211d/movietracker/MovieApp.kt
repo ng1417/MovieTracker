@@ -17,7 +17,6 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
-import com.cs211d.movietracker.ui.HomeScreen
 import com.cs211d.movietracker.ui.MovieViewModel
 
 
@@ -61,8 +60,8 @@ fun MovieApp(
 
             // add to or modify this existing composable as needed
             composable(route = MovieAppScreen.Home.name) {
-                HomeScreen()
             }
+
         }
     }
 }
