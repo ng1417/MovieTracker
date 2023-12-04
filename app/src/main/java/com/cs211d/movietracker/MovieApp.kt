@@ -64,7 +64,6 @@ fun MovieApp(
             // add to or modify this existing composable as needed
             composable(route = MovieAppScreen.Home.name) {
                 HomeScreen(
-                    movieViewModel=viewModel,
                     onAddMovie={
                         navController.navigate(MovieAppScreen.EnterMovie.name)
                     },

@@ -26,7 +26,6 @@ import com.cs211d.movietracker.R
 
 @Composable
 fun HomeScreen(
-    movieViewModel: MovieViewModel,
     onAddMovie: () -> Unit,
     onClickRecommend: () -> Unit
 ) {
