@@ -26,7 +26,7 @@ import com.cs211d.movietracker.R
 
 @Composable
 fun HomeScreen(
-    onAddMovie: () -> Unit,
+    onClickEnterMovie: () -> Unit,
     onClickRecommend: () -> Unit
 ) {
     Column(
@@ -56,7 +56,7 @@ fun HomeScreen(
         /*** CREATE A BUTTON TO GO TO THE EnterMovieScreen  ***/
         // add parameters to the HomeScreen composable as needed
         Button(
-            onClick = onAddMovie,
+            onClick = onClickEnterMovie,
             modifier = Modifier
                 .align(Alignment.CenterHorizontally)
                 .wrapContentHeight()

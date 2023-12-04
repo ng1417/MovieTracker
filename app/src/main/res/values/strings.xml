@@ -11,4 +11,6 @@
     <string name="movie_list_summary_text">You have %1$s movies to choose from.</string>
     <string name="enter_movie">Enter Movie</string>
     <string name="recommend_movie">Recommend Movie</string>
+    <string name="total_number_of_movies">Total number of movies: %1$s</string>
+    <string name="recommended_movie">Recommended Movie: %1$s</string>
 </resources>

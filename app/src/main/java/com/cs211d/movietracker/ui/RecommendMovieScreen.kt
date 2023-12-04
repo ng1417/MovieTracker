@@ -12,9 +12,11 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.cs211d.movietracker.R
 import com.cs211d.movietracker.data.UiState
 
 
@@ -23,7 +25,7 @@ import com.cs211d.movietracker.data.UiState
 fun MovieRecommendation(
     uiState : UiState,
     onClickHome: () -> Unit = {},
-    onAddMovie: () -> Unit,
+    onClickEnterMovie: () -> Unit,
 ) {
 
     Column(
@@ -34,8 +36,9 @@ fun MovieRecommendation(
 
         /*** CREATE TEXT THAT SPECIFIES THE NUMBER OF MOVIES TO CHOOSE FROM ***/
         // add parameters to the MovieRecommendation composable as needed
+        val numMovies = uiState.movieList.size.toString()
         Text(
-            text = uiState.movieList.size.toString(),
+            text = stringResource(R.string.total_number_of_movies, numMovies),
             style = MaterialTheme.typography.displaySmall,
             fontWeight = FontWeight.Bold,
             modifier = Modifier
@@ -46,8 +49,9 @@ fun MovieRecommendation(
 
         /*** CREATE TEXT THAT DISPLAYS THE RECOMMENDED MOVIE ***/
         // add parameters to the MovieRecommendation composable as needed
+        val movieRecommended = uiState.movieRecommendation.toString()
         Text(
-            text = uiState.movieRecommendation.toString(),
+            text = stringResource(R.string.recommended_movie, movieRecommended),
             style = MaterialTheme.typography.displaySmall,
             fontWeight = FontWeight.Bold,
             modifier = Modifier
@@ -60,7 +64,7 @@ fun MovieRecommendation(
         /*** CREATE A BUTTON TO GO TO THE EnterMovieScreen  ***/
         // add parameters to the MovieRecommendation composable as needed
         Button(
-            onClick = onAddMovie,
+            onClick = onClickEnterMovie,
             modifier = Modifier
                 .align(Alignment.CenterHorizontally)
                 .wrapContentHeight()
