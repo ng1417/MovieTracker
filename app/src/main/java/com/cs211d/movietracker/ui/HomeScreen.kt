@@ -26,6 +26,7 @@ import com.cs211d.movietracker.R
 
 @Composable
 fun HomeScreen(
+    movieViewModel: MovieViewModel,
     onAddMovie: () -> Unit,
     onClickRecommend: () -> Unit
 ) {
@@ -41,12 +42,14 @@ fun HomeScreen(
             style = MaterialTheme.typography.displayLarge,
             fontWeight = FontWeight.Bold,
             modifier = Modifier
+                .align(Alignment.CenterHorizontally)
                 .padding(vertical = 16.dp)
         )
         Text(
             text = (stringResource(R.string.welcome_instructions_text)),
             style = MaterialTheme.typography.bodyMedium,
             modifier = Modifier
+                .align(Alignment.CenterHorizontally)
                 .padding(vertical = 16.dp)
                 .wrapContentSize(align = Alignment.CenterStart)
         )
@@ -56,11 +59,12 @@ fun HomeScreen(
         Button(
             onClick = onAddMovie,
             modifier = Modifier
+                .align(Alignment.CenterHorizontally)
                 .wrapContentHeight()
                 .padding(vertical = 16.dp)
         ) {
             Text(
-                text = "Enter Movie",
+                text = stringResource(R.string.enter_movie),
                 fontSize = 24.sp
             )
         }
@@ -71,11 +75,12 @@ fun HomeScreen(
         Button(
             onClick = onClickRecommend,
             modifier = Modifier
+                .align(Alignment.CenterHorizontally)
                 .wrapContentHeight()
                 .padding(vertical = 16.dp)
         ) {
             Text(
-                text = "Recommend Movie",
+                text = stringResource(R.string.recommend_movie),
                 fontSize = 24.sp
             )
         }

@@ -20,8 +20,8 @@ class MovieViewModel : ViewModel() {
 
     // the movie the user is currently typing in
     var currentMovie by mutableStateOf("")
-    var currentRecommendation by mutableStateOf("N/A")
-    var currentState by mutableStateOf(false)
+    var currentRecommendation = "N/A"
+    var movieError: Boolean = true
 
     private val movieList: MutableList<String> = mutableStateListOf()
 
@@ -33,9 +33,9 @@ class MovieViewModel : ViewModel() {
     // the user is typing in a movie; update the currentMovie variable and the state of the ui
     // to indicate whether there is an error
     fun updateMovie(movie: String) {
-        currentMovie = movie
-        currentState = isValidMovie(currentMovie)
-        updateUiState(currentState, currentRecommendation, movieList)
+        currentMovie  = movie
+        movieError = !isValidMovie(currentMovie)
+        updateMovieError(movieError)
     }
 
     /*** COMPLETE THIS FUNCTION ***/
@@ -43,23 +43,52 @@ class MovieViewModel : ViewModel() {
     // the recommendation can be "N/A". otherwise, randomly select a movie from the list.
     fun recommendMovie()  {
         if (movieList.size > 0) {
-            currentRecommendation = movieList.random()
+            updateMovieRecommendation(movieList.random())
+        } else {
+            updateMovieRecommendation("N/A")
         }
-        updateUiState(currentState, currentRecommendation, movieList)
 
     }
+
     /*** COMPLETE THIS FUNCTION ***/
     // if the movie is valid, add it to the list.
     // either way, update the state of the ui and the currentMovie.
     fun addMovieToList() {
-        if (currentState) {
+        if (!movieError) {
             movieList.add(currentMovie)
+            updateMovieList(movieList)
+        } else {
+            currentMovie = ""
         }
-        updateUiState(currentState, currentRecommendation, movieList)
+        updateMovie(currentMovie)
 
     }
 
     /*** RECOMMENDED: add one or more private methods to update the state of the ui! ***/
+    private fun updateMovieError(movieError: Boolean) {
+        _uiState.update{ currentState ->
+            currentState.copy(
+                movieError = movieError,
+            )
+        }
+    }
+
+    private fun updateMovieRecommendation(movieRecommendation: String) {
+        _uiState.update{ currentState ->
+            currentState.copy(
+                movieRecommendation = movieRecommendation,
+            )
+        }
+    }
+    private fun updateMovieList(movieList:List<String>){
+        _uiState.update{ currentState ->
+            currentState.copy(
+                movieList = movieList,
+            )
+        }
+    }
+
+    /*
     private fun updateUiState(movieError: Boolean, movieRecommendation:String, movieLIst:List<String>) {
         _uiState.update{ currentState ->
                 currentState.copy(
@@ -70,5 +99,6 @@ class MovieViewModel : ViewModel() {
         }
 
     }
+    */
 
 }

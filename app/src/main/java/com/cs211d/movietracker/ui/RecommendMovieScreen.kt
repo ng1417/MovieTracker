@@ -39,6 +39,7 @@ fun MovieRecommendation(
             style = MaterialTheme.typography.displaySmall,
             fontWeight = FontWeight.Bold,
             modifier = Modifier
+                .align(Alignment.CenterHorizontally)
                 .padding(vertical = 16.dp)
                 .wrapContentSize(align = Alignment.Center)
         )
@@ -50,6 +51,7 @@ fun MovieRecommendation(
             style = MaterialTheme.typography.displaySmall,
             fontWeight = FontWeight.Bold,
             modifier = Modifier
+                .align(Alignment.CenterHorizontally)
                 .padding(vertical = 16.dp)
                 .wrapContentSize(align = Alignment.Center)
         )
@@ -60,6 +62,7 @@ fun MovieRecommendation(
         Button(
             onClick = onAddMovie,
             modifier = Modifier
+                .align(Alignment.CenterHorizontally)
                 .wrapContentHeight()
                 .padding(vertical = 16.dp)
         ) {
@@ -74,6 +77,7 @@ fun MovieRecommendation(
         Button(
             onClick = onClickHome,
             modifier = Modifier
+                .align(Alignment.CenterHorizontally)
                 .wrapContentHeight()
                 .padding(vertical = 16.dp)
         ) {

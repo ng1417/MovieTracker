@@ -64,6 +64,7 @@ fun MovieApp(
             // add to or modify this existing composable as needed
             composable(route = MovieAppScreen.Home.name) {
                 HomeScreen(
+                    movieViewModel=viewModel,
                     onAddMovie={
                         navController.navigate(MovieAppScreen.EnterMovie.name)
                     },
@@ -83,12 +84,10 @@ fun MovieApp(
                         navController.navigate(MovieAppScreen.RecommendMovie.name)
                     },
                     onMovieInputChange={
-                        // Vee: check if this destination is correct
-                        //navController.popBackStack(MovieAppScreen.RecommendMovie.name, false)
-                        //navController.navigate(MovieAppScreen.EnterMovie.name)
+                        viewModel.addMovieToList()
                     },
                     onAddMovie={
-                        navController.navigate(MovieAppScreen.EnterMovie.name)
+                        viewModel.addMovieToList()
                     },
                 )
             }
