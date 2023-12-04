@@ -17,7 +17,9 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import com.cs211d.movietracker.ui.EnterMovieScreen
 import com.cs211d.movietracker.ui.HomeScreen
+import com.cs211d.movietracker.ui.MovieRecommendation
 import com.cs211d.movietracker.ui.MovieViewModel
 
 
@@ -61,7 +63,47 @@ fun MovieApp(
 
             // add to or modify this existing composable as needed
             composable(route = MovieAppScreen.Home.name) {
-                HomeScreen()
+                HomeScreen(
+                    onAddMovie={
+                        navController.navigate(MovieAppScreen.EnterMovie.name)
+                    },
+                    onClickRecommend={
+                        navController.navigate(MovieAppScreen.RecommendMovie.name)
+                    },
+                )
+            }
+
+            composable(route = MovieAppScreen.EnterMovie.name) {
+                EnterMovieScreen(
+                    movieViewModel=viewModel,
+                    onClickHome={
+                        navController.navigate(MovieAppScreen.Home.name)
+                    },
+                    onClickRecommend={
+                        navController.navigate(MovieAppScreen.RecommendMovie.name)
+                    },
+                    onMovieInputChange={
+                        // Vee: check if this destination is correct
+                        //navController.popBackStack(MovieAppScreen.RecommendMovie.name, false)
+                        //navController.navigate(MovieAppScreen.EnterMovie.name)
+                    },
+                    onAddMovie={
+                        navController.navigate(MovieAppScreen.EnterMovie.name)
+                    },
+                )
+            }
+
+            composable(route = MovieAppScreen.RecommendMovie.name) {
+                MovieRecommendation(
+                    uiState = uiState,
+                    onClickHome={
+                        navController.navigate(MovieAppScreen.Home.name)
+                    },
+                    onAddMovie={
+                        navController.navigate(MovieAppScreen.EnterMovie.name)
+                    },
+
+                )
             }
         }
     }
