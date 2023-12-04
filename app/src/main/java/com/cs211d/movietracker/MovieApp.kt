@@ -12,7 +12,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.dimensionResource
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
@@ -66,8 +65,6 @@ fun MovieApp(
             // add to or modify this existing composable as needed
             composable(route = MovieAppScreen.Home.name) {
                 HomeScreen(
-                    viewModel = viewModel,
-                    navController = navController,
                     onEnterMovieClick = {navController.navigate(MovieAppScreen.EnterMovie.name)},
                     onRecommendationMovieClick = {navController.navigate(MovieAppScreen.RecommendMovie.name)},
                 )
@@ -78,7 +75,7 @@ fun MovieApp(
                     movieViewModel = viewModel,
                     onClickHome = { navController.navigate(MovieAppScreen.Home.name) },
                     onClickRecommend = { navController.navigate(MovieAppScreen.RecommendMovie.name) },
-                    onMovieInputChange = { viewModel.addMovieToList() },
+                    onMovieInputChange = { viewModel.updateMovie(it) },
                     onAddMovie = { viewModel.addMovieToList() },
                 )
             }
@@ -86,6 +83,8 @@ fun MovieApp(
             composable(route = MovieAppScreen.RecommendMovie.name) {
                 MovieRecommendation(
                     uiState = uiState,
+                    onEnterMovieClick = {navController.navigate(MovieAppScreen.EnterMovie.name)},
+                    onRecommendationMovieClick = { viewModel.recommendMovie()}
                 )
             }
         }

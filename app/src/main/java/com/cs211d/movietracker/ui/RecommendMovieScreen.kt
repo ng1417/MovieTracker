@@ -20,12 +20,15 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.cs211d.movietracker.R
 import com.cs211d.movietracker.data.UiState
+import com.cs211d.movietracker.ui.components.NavigationButton
 
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MovieRecommendation(
     uiState : UiState,
+    onEnterMovieClick : () -> Unit = {},
+    onRecommendationMovieClick : () -> Unit = {}
 ) {
 
     Column(
@@ -38,13 +41,13 @@ fun MovieRecommendation(
         /*** CREATE TEXT THAT SPECIFIES THE NUMBER OF MOVIES TO CHOOSE FROM ***/
         // add parameters to the MovieRecommendation composable as needed
         val numberOfMovie = uiState.movieList.size
-        Text(text = "You Have $numberOfMovie to choose from") // need to use stringResource
+        Text(stringResource(R.string.movie_list_summary_text,numberOfMovie))
 
         /*** CREATE TEXT THAT DISPLAYS THE RECOMMENDED MOVIE ***/
         // add parameters to the MovieRecommendation composable as needed
         val recMovie = uiState.movieRecommendation
         Text(
-            text = "Recommended Movie: /n$recMovie", // need to use stringResource
+            text = "Recommended Movie: $recMovie",
             style = MaterialTheme.typography.displaySmall,
             fontWeight = FontWeight.Bold,
             modifier = Modifier
@@ -54,24 +57,10 @@ fun MovieRecommendation(
 
         /*** CREATE A BUTTON TO GO TO THE EnterMovieScreen  ***/
         // add parameters to the MovieRecommendation composable as needed
-        Button(
-            onClick = { }
-        ) {
-            Text(
-                text = stringResource(R.string.enter_movies_button_text),
-                fontSize = 24.sp
-            )
-        }
+        NavigationButton(stringResource(R.string.enter_movies_button_text), onEnterMovieClick)
 
         /*** CREATE A BUTTON TO GO TO THE HomeScreen  ***/
         // add parameters to the MovieRecommendation composable as needed
-        Button(
-            onClick = { }
-        ) {
-            Text(
-                text = stringResource(R.string.home_button_text),
-                fontSize = 24.sp
-            )
-        }
+        NavigationButton(stringResource(R.string.movie_recommendation_button_text), onRecommendationMovieClick)
     }
 }

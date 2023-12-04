@@ -24,12 +24,9 @@ import com.cs211d.movietracker.ui.components.NavigationButton
 
 @Composable
 fun HomeScreen(
-    viewModel: MovieViewModel,
-    navController: NavController,
     onEnterMovieClick : () -> Unit = {},
     onRecommendationMovieClick : () -> Unit = {},
 ) {
-    val uiState by viewModel.uiState.collectAsState()
 
     Column(
         modifier = Modifier
@@ -55,14 +52,10 @@ fun HomeScreen(
 
         /*** CREATE A BUTTON TO GO TO THE EnterMovieScreen  ***/
         // add parameters to the HomeScreen composable as needed
-
-//               navController.navigate(MovieAppScreen.EnterMovie.name)
         NavigationButton(stringResource(R.string.enter_movies_button_text), onEnterMovieClick)
-
 
         /*** CREATE A BUTTON TO GO TO THE RecommendMovieScreen  ***/
         // add parameters to the HomeScreen composable as needed
-//               navController.navigate(MovieAppScreen.RecommendMovie.name)
         NavigationButton(stringResource(R.string.movie_recommendation_button_text), onRecommendationMovieClick)
     }
 }

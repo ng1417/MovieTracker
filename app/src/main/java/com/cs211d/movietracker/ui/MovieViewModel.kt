@@ -11,7 +11,6 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 
-
 class MovieViewModel : ViewModel() {
 
     private val _uiState = MutableStateFlow(UiState())
@@ -19,6 +18,7 @@ class MovieViewModel : ViewModel() {
 
     // the movie the user is currently typing in
     var currentMovie by mutableStateOf("")
+      private set
 
     private val movieList: MutableList<String> = mutableStateListOf()
 
@@ -31,26 +31,18 @@ class MovieViewModel : ViewModel() {
     // to indicate whether there is an error
     fun updateMovie(movie: String) {
         currentMovie = movie
-        _uiState.update { currentState ->
-            currentState.copy(
-                movieError = !isValidMovie(movie)
-            )
-        }
+
+        val isError = !isValidMovie(currentMovie)
+
+        updateUiState(isError,movieList)
+
     }
 
     /*** COMPLETE THIS FUNCTION ***/
     // update the state of the ui with a movie recommendation. if the list is empty,
     // the recommendation can be "N/A". otherwise, randomly select a movie from the list.
     fun recommendMovie()  {
-        _uiState.update { currentState ->
-            currentState.copy(
-                movieRecommendation = if (movieList.isNotEmpty()) {
-                    movieList.random()
-                } else {
-                    "N/A"
-                }
-            )
-        }
+        updateUiState(false, movieList)
     }
 
     /*** COMPLETE THIS FUNCTION ***/
@@ -62,14 +54,17 @@ class MovieViewModel : ViewModel() {
             movieList.add(currentMovie)
         }
         updateMovie("")
+        updateUiState(false, movieList)
     }
 
     /*** RECOMMENDED: add one or more private methods to update the state of the ui! ***/
-    private fun updateUiState() {
-        val isError = !isValidMovie(currentMovie)
-        val errorMessage = if (isError) "Please enter a valid movie name" else ""
-        _uiState.value = _uiState.value.copy(movieError = isError, movieList = movieList, movieRecommendation = "")
+    private fun updateUiState(movieError: Boolean, movieList: List<String>) {
+        _uiState.update { currentState ->
+            currentState.copy(
+                movieError = movieError,
+                movieRecommendation = if(movieList.isNotEmpty()) movieList.random() else "N/A",
+                movieList = movieList,
+            )
+        }
     }
-
-
 }
