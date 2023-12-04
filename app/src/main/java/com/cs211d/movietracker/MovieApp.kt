@@ -1,17 +1,27 @@
 package com.cs211d.movietracker
 
+import androidx.annotation.StringRes
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
@@ -24,10 +34,37 @@ import com.cs211d.movietracker.ui.MovieRecommendation
 import com.cs211d.movietracker.ui.MovieViewModel
 
 
-enum class MovieAppScreen(var title: String) {
-    EnterMovie("Enter a movie"),
-    RecommendMovie("Movie Recommendation"),
-    Home("Movie Tracker App")
+enum class MovieAppScreen(@StringRes val title: Int) {
+    EnterMovie(title = R.string.enter_a_movie),
+    RecommendMovie(title = R.string.movie_recommendation),
+    Home(title = R.string.app_name)
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun MovieTrackAppBar(
+    currentScreen: MovieAppScreen,
+    canNavigateBack: Boolean,
+    navigateUp: () -> Unit,
+    modifier: Modifier = Modifier
+) {
+    TopAppBar(
+        title = { Text(stringResource(currentScreen.title)) },
+        colors = TopAppBarDefaults.mediumTopAppBarColors(
+            containerColor = MaterialTheme.colorScheme.primaryContainer
+        ),
+        modifier = modifier,
+        navigationIcon = {
+            if (canNavigateBack) {
+                IconButton(onClick = navigateUp) {
+                    Icon(
+                        imageVector = Icons.Filled.ArrowBack,
+                        contentDescription = stringResource(R.string.back_button)
+                    )
+                }
+            }
+        }
+    )
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -44,11 +81,10 @@ fun MovieApp(
 
     Scaffold(
         topBar = {
-            CenterAlignedTopAppBar(
-                title = { Text(currentScreen.title) },
-                colors = TopAppBarDefaults.mediumTopAppBarColors(
-                    containerColor = MaterialTheme.colorScheme.primaryContainer
-                ),
+            MovieTrackAppBar(
+                currentScreen = currentScreen,
+                canNavigateBack = navController.previousBackStackEntry != null,
+                navigateUp = { navController.navigateUp() },
             )
         }
 
@@ -83,8 +119,9 @@ fun MovieApp(
             composable(route = MovieAppScreen.RecommendMovie.name) {
                 MovieRecommendation(
                     uiState = uiState,
-                    onEnterMovieClick = {navController.navigate(MovieAppScreen.EnterMovie.name)},
-                    onRecommendationMovieClick = { viewModel.recommendMovie()}
+                    onEnterMovieClick = { navController.navigate(MovieAppScreen.EnterMovie.name) },
+                    onHomeButtonClick = { navController.navigate(MovieAppScreen.Home.name)
+                    viewModel.recommendMovie()}
                 )
             }
         }

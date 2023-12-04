@@ -28,7 +28,7 @@ import com.cs211d.movietracker.ui.components.NavigationButton
 fun MovieRecommendation(
     uiState : UiState,
     onEnterMovieClick : () -> Unit = {},
-    onRecommendationMovieClick : () -> Unit = {}
+    onHomeButtonClick : () -> Unit = {}
 ) {
 
     Column(
@@ -61,6 +61,6 @@ fun MovieRecommendation(
 
         /*** CREATE A BUTTON TO GO TO THE HomeScreen  ***/
         // add parameters to the MovieRecommendation composable as needed
-        NavigationButton(stringResource(R.string.movie_recommendation_button_text), onRecommendationMovieClick)
+        NavigationButton(stringResource(R.string.home_button_text), onHomeButtonClick)
     }
 }
