@@ -9,4 +9,7 @@
     <string name="movie_recommendation_button_text">Recommend a Movie</string>
     <string name="home_button_text">Home</string>
     <string name="movie_list_summary_text">You have %1$s movies to choose from.</string>
+    <string name="enter_a_movie">Enter a movie</string>
+    <string name="movie_recommendation">Movie Recommendation</string>
+    <string name="back_button">Back</string>
 </resources>
